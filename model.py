@@ -33,27 +33,6 @@ class scraper:
         driver.implicitly_wait(15)
         time.sleep(5)
         scraped_agencies = driver.find_elements_by_xpath('//*[@id="agency-tiles-widget"]/div/div/div/div/div/div')
-        # driver.implicitly_wait(2)
-        # if os.path.exists('config.txt'):
-        #     file = open('config.txt', 'r+')
-        # else:
-        #     file = open('config.txt', 'w')
-        # if len(file.readline()) == 0:
-        #     file.write('Agencies:\n')
-        #     for i in range(len(agencies)):
-        #         file.write('{}\n'.format(agencies[i]))
-        #     file.write('\nSelected:\n')
-        # else:
-        #     temp = file.read().split('\n')
-        #     num = random.randint(0, len(scraped_agencies)-1)
-        #     if temp[-1] == 'Selected:':
-        #         print('Select a Department from config.txt and write the exact name under Selected section or there can be a random one selected for testing purpose')
-        #         self.company_name = scraped_agencies[num].text.split('\n')[0]
-        #         scraped_agencies[num].click()
-        #     else:
-        #         # scraped_agencies[agencies.index(temp[-1])].click()
-        #         self.company_name = scraped_agencies[num].text.split('\n')[0]
-        #         scraped_agencies[num].click()
         master_fixture = [[agency.text.split('\n')[0], agency.text.split('\n')[-2]] for agency in scraped_agencies]
         agencies_data = pd.DataFrame(master_fixture, columns=['agencies', 'spendings'])
         agencies_data.to_csv('Agencies.csv')
@@ -148,8 +127,7 @@ class scraper:
 
         driver.close()
 
-        end = time.time()
-        # print('time taken by scarper: ' ,end - start)
+
 
     def run(self):
         self.get_all_agencies()
